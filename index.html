@@ -1,0 +1,833 @@
+# -groupeX-projet
+Déploiement d'applications
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MindCare – Prends soin de toi, sans pression</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --violet: #8a0088;
+    --violet-light: #EEEDFE;
+    --violet-mid: #8a008889;
+    --yellow: #e6ad1a;
+    --bg: #F7F6FD;
+    --white: #FFFFFF;
+    --text: #1A1A2E;
+    --muted: #6B6B85;
+    --border: rgba(83,74,183,0.14);
+    --r: 16px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(247,246,253,0.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 6%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 60px;
+  }
+  .nav-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 21px; color: var(--violet-dark);
+  }
+  .nav-logo em { color: var(--violet-mid); font-style: italic; }
+  .nav-cta {
+    background: var(--violet); color: #fff;
+    border: none; padding: 8px 20px; border-radius: 40px;
+    font-size: 14px; font-weight: 500; cursor: pointer;
+    text-decoration: none; transition: background .2s, transform .15s;
+  }
+  .nav-cta:hover { background: var(--violet-dark); transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 100px 6% 60px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -200px; right: -200px;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(83,74,183,.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-inner {
+    max-width: 1100px; margin: 0 auto; width: 100%;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--violet-light); color: var(--violet-dark);
+    border: 1px solid rgba(83,74,183,.2);
+    padding: 6px 14px; border-radius: 40px;
+    font-size: 13px; font-weight: 500; margin-bottom: 24px;
+  }
+  .hero-badge .dot {
+    width: 8px; height: 8px; background: var(--violet-mid);
+    border-radius: 50%; animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity:1; transform:scale(1); }
+    50% { opacity:.4; transform:scale(.8); }
+  }
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(34px,4vw,54px);
+    line-height: 1.1; letter-spacing: -1px;
+    margin-bottom: 20px;
+  }
+  h1 em { color: var(--violet); font-style: italic; }
+  .hero-sub {
+    font-size: 18px; color: var(--muted);
+    font-weight: 300; margin-bottom: 36px; max-width: 420px;
+  }
+  .hero-sub strong { color: var(--text); font-weight: 500; }
+  .cta-group { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--violet); color: #fff;
+    border: none; padding: 14px 28px; border-radius: 40px;
+    font-size: 16px; font-weight: 500; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px;
+    text-decoration: none; transition: all .2s;
+  }
+  .btn-primary:hover {
+    background: var(--violet-dark); transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(83,74,183,.3);
+  }
+  .btn-ghost {
+    color: var(--muted); font-size: 14px; background: none; border: none;
+    text-decoration: underline; text-underline-offset: 3px; cursor: pointer;
+  }
+
+  /* ── PHONE ── */
+  .hero-visual { display: flex; justify-content: center; position: relative; }
+  .phone-frame {
+    width: 258px;
+    background: var(--white); border-radius: 40px;
+    border: 8px solid #1A1A2E;
+    box-shadow: 0 40px 80px rgba(26,26,46,.2);
+    overflow: hidden;
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+  .phone-notch {
+    width: 88px; height: 24px;
+    background: #1A1A2E; border-radius: 0 0 14px 14px;
+    margin: 0 auto;
+  }
+  .phone-screen { background: var(--bg); padding: 14px 13px 20px; }
+  .app-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .app-logo-sm { font-family: 'DM Serif Display', serif; font-size: 14px; color: var(--violet-dark); }
+  .app-avatar {
+    width: 28px; height: 28px; background: var(--violet-light);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: var(--violet);
+  }
+  .mood-card {
+    background: linear-gradient(135deg, var(--violet), var(--violet-dark));
+    border-radius: 14px; padding: 14px; color: white; margin-bottom: 10px;
+  }
+  .mood-card-title { font-size: 10px; opacity: .7; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px; }
+  .mood-card-score { font-size: 34px; font-weight: 600; line-height: 1; }
+  .mood-card-label { font-size: 11px; opacity: .8; margin-top: 4px; }
+  .mood-emojis {
+    display: flex; justify-content: space-between;
+    background: var(--white); border-radius: 12px;
+    padding: 8px 7px; margin-bottom: 10px;
+  }
+  .mood-emoji-btn {
+    width: 34px; height: 34px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-size: 17px;
+  }
+  .mood-emoji-btn.active { background: var(--violet-light); }
+  .mini-card {
+    background: var(--white); border-radius: 10px;
+    padding: 9px 11px; margin-bottom: 7px;
+    display: flex; align-items: center; gap: 8px; font-size: 11px;
+  }
+  .mini-icon {
+    width: 28px; height: 28px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; flex-shrink: 0;
+  }
+  .mini-card-text { color: var(--text); font-weight: 500; }
+  .mini-card-sub { color: var(--muted); font-size: 10px; }
+
+  .float-badge {
+    position: absolute;
+    background: var(--white); border-radius: 12px;
+    padding: 8px 12px; box-shadow: 0 8px 24px rgba(0,0,0,.1);
+    font-size: 12px; font-weight: 500;
+    display: flex; align-items: center; gap: 6px; white-space: nowrap;
+  }
+  .float-badge-1 { top: 20px; left: -55px; color: var(--violet-dark); animation: float2 5s ease-in-out infinite; }
+  .float-badge-2 { bottom: 80px; right: -46px; color: #2D7D46; animation: float2 5s ease-in-out infinite 1.5s; }
+  @keyframes float2 {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  /* ── SOCIAL PROOF ── */
+  .social-proof {
+    background: var(--white);
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    padding: 32px 6%;
+  }
+  .social-proof-inner {
+    max-width: 900px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: center;
+    gap: 48px; flex-wrap: wrap;
+  }
+  .proof-stat { display: flex; flex-direction: column; align-items: center; }
+  .proof-number {
+    font-family: 'DM Serif Display', serif;
+    font-size: 36px; color: var(--violet); line-height: 1;
+  }
+  .proof-label { font-size: 13px; color: var(--muted); margin-top: 4px; }
+  .proof-divider { width: 1px; height: 48px; background: var(--border); }
+  .stars { display: flex; gap: 2px; margin-bottom: 4px; }
+  .star { color: #B87B10; font-size: 16px; }
+
+  /* ── SECTIONS ── */
+  section { padding: 80px 6%; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-tag {
+    font-size: 12px; font-weight: 600; color: var(--violet);
+    text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px;
+  }
+  h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px,3vw,42px);
+    letter-spacing: -.5px; line-height: 1.15; margin-bottom: 16px;
+  }
+  h2 em { color: var(--violet); font-style: italic; }
+  .section-desc {
+    font-size: 17px; color: var(--muted);
+    font-weight: 300; max-width: 520px; margin-bottom: 48px;
+  }
+
+  /* ── BENEFITS ── */
+  .benefits-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+  .benefit-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: var(--r); padding: 28px 24px;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .benefit-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(83,74,183,.1); }
+  .benefit-icon {
+    width: 48px; height: 48px; background: var(--violet-light);
+    border-radius: 12px; display: flex; align-items: center; justify-content: center;
+    font-size: 22px; margin-bottom: 16px;
+  }
+  .benefit-card h3 { font-size: 17px; font-weight: 600; margin-bottom: 8px; }
+  .benefit-card p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+  /* ── QUIZ ── */
+  .quiz-section {
+    background: var(--white);
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  }
+  .quiz-wrapper { display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: start; }
+  .quiz-steps { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
+  .quiz-step { display: flex; gap: 14px; align-items: flex-start; }
+  .step-num {
+    width: 28px; height: 28px; background: var(--violet-light);
+    color: var(--violet-dark); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600; flex-shrink: 0; margin-top: 2px;
+  }
+  .step-text strong { display: block; font-size: 14px; margin-bottom: 2px; }
+  .step-text span { font-size: 13px; color: var(--muted); }
+
+  .quiz-card {
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 24px; padding: 32px;
+  }
+  .quiz-progress { display: flex; gap: 6px; margin-bottom: 28px; }
+  .quiz-progress-bar {
+    height: 4px; flex: 1; background: var(--border);
+    border-radius: 2px; transition: background .3s;
+  }
+  .quiz-progress-bar.active { background: var(--violet); }
+  .quiz-question { font-size: 18px; font-weight: 500; margin-bottom: 20px; line-height: 1.4; min-height: 52px; }
+  .quiz-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+  .quiz-option {
+    background: var(--white); border: 1.5px solid var(--border);
+    border-radius: 12px; padding: 12px 16px; cursor: pointer;
+    font-size: 14px; display: flex; align-items: center; gap: 12px;
+    transition: all .2s; text-align: left;
+  }
+  .quiz-option:hover { border-color: var(--violet-mid); background: var(--violet-light); }
+  .quiz-option.selected {
+    border-color: var(--violet); background: var(--violet-light);
+    color: var(--violet-dark); font-weight: 500;
+  }
+  .quiz-option-dot {
+    width: 18px; height: 18px; border: 1.5px solid currentColor;
+    border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    opacity: .4; transition: opacity .2s;
+  }
+  .quiz-option.selected .quiz-option-dot {
+    opacity: 1; background: var(--violet); border-color: var(--violet);
+  }
+  .quiz-option.selected .quiz-option-dot::after {
+    content: ''; width: 6px; height: 6px; background: white; border-radius: 50%;
+  }
+  .quiz-nav { display: flex; justify-content: space-between; align-items: center; }
+  .quiz-counter { font-size: 13px; color: var(--muted); }
+  .btn-next {
+    background: var(--violet); color: white;
+    border: none; padding: 10px 22px; border-radius: 40px;
+    font-size: 14px; font-weight: 500; cursor: pointer;
+    opacity: .35; pointer-events: none; transition: all .2s;
+  }
+  .btn-next.ready { opacity: 1; pointer-events: all; }
+  .btn-next.ready:hover { background: var(--violet-dark); transform: translateY(-1px); }
+
+  .quiz-result { display: none; text-align: center; padding: 8px 0; }
+  .result-icon { font-size: 52px; margin-bottom: 12px; display: block; }
+  .result-badge {
+    display: inline-block; padding: 6px 16px; border-radius: 40px;
+    font-size: 13px; font-weight: 600; margin-bottom: 12px;
+  }
+  .result-badge.green { background: #EAF3DE; color: #3B6D11; }
+  .result-badge.orange { background: #FAEEDA; color: #854F0B; }
+  .result-badge.red { background: #FCEBEB; color: #A32D2D; }
+  .result-title { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+  .result-text { font-size: 14px; color: var(--muted); margin-bottom: 20px; line-height: 1.65; }
+  .btn-result {
+    background: var(--violet); color: white; border: none;
+    padding: 13px 24px; border-radius: 40px;
+    font-size: 15px; font-weight: 500; cursor: pointer; width: 100%;
+    transition: all .2s;
+  }
+  .btn-result:hover { background: var(--violet-dark); }
+
+  /* ── TEMOIGNAGES ── */
+  .testimonials-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 8px; }
+  .testi-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: var(--r); padding: 24px;
+  }
+  .testi-stars { display: flex; gap: 2px; margin-bottom: 12px; }
+  .testi-star { color: #B87B10; font-size: 14px; }
+  .testi-text { font-size: 14px; line-height: 1.65; margin-bottom: 16px; font-style: italic; color: var(--text); }
+  .testi-author { display: flex; align-items: center; gap: 10px; }
+  .testi-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 600; flex-shrink: 0;
+  }
+  .testi-name { font-size: 13px; font-weight: 500; }
+  .testi-info { font-size: 12px; color: var(--muted); }
+
+  .video-block {
+    background: var(--violet-dark); border-radius: var(--r);
+    padding: 60px 40px; text-align: center; color: white;
+    margin-top: 32px; position: relative; overflow: hidden;
+  }
+  .video-block::before {
+    content: ''; position: absolute; top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(ellipse at center, rgba(127,119,221,.3) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .play-btn {
+    width: 64px; height: 64px; background: rgba(255,255,255,.15);
+    border: 2px solid rgba(255,255,255,.4); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px; cursor: pointer; transition: all .2s; position: relative; z-index: 1;
+  }
+  .play-btn:hover { background: rgba(255,255,255,.25); transform: scale(1.05); }
+  .video-block h3 {
+    font-family: 'DM Serif Display', serif; font-size: 22px;
+    margin-bottom: 8px; position: relative; z-index: 1;
+  }
+  .video-block p { font-size: 14px; opacity: .65; position: relative; z-index: 1; }
+
+  /* ── FAQ ── */
+  .faq-list {
+    border: 1px solid var(--border); border-radius: var(--r);
+    overflow: hidden; display: flex; flex-direction: column; gap: 1px;
+    margin-top: 40px;
+  }
+  .faq-item { background: var(--white); }
+  .faq-q {
+    padding: 18px 24px; font-size: 15px; font-weight: 500;
+    cursor: pointer; display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; user-select: none; transition: background .15s;
+  }
+  .faq-q:hover { background: var(--bg); }
+  .faq-icon {
+    width: 20px; height: 20px; border: 1.5px solid var(--muted);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 14px; color: var(--muted); transition: all .2s;
+  }
+  .faq-item.open .faq-icon { background: var(--violet); border-color: var(--violet); color: white; transform: rotate(45deg); }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
+  .faq-item.open .faq-a { max-height: 200px; }
+  .faq-a-inner {
+    padding: 14px 24px 18px; font-size: 14px; color: var(--muted);
+    line-height: 1.7; border-top: 1px solid var(--border);
+  }
+
+  /* ── FINAL CTA ── */
+  .final-cta {
+    background: var(--violet-dark); color: white;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .final-cta::before {
+    content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(127,119,221,.25) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .final-cta-inner { max-width: 600px; margin: 0 auto; position: relative; z-index: 1; }
+  .urgency-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(245,196,95,.12); border: 1px solid rgba(245,196,95,.4);
+    color: var(--yellow); padding: 6px 16px; border-radius: 40px;
+    font-size: 13px; font-weight: 500; margin-bottom: 24px;
+  }
+  .urgency-dot { width: 6px; height: 6px; background: var(--yellow); border-radius: 50%; animation: pulse 1.5s infinite; }
+  .final-cta h2 { color: white; margin-bottom: 16px; }
+  .final-cta h2 em { color: var(--yellow); }
+  .final-cta p { font-size: 16px; opacity: .6; margin-bottom: 36px; font-weight: 300; }
+  .btn-cta-final {
+    background: var(--yellow); color: var(--text);
+    border: none; padding: 16px 36px; border-radius: 40px;
+    font-size: 17px; font-weight: 600; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px;
+    text-decoration: none; transition: all .2s; margin-bottom: 16px;
+  }
+  .btn-cta-final:hover {
+    background: #f0b940; transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(245,196,95,.35);
+  }
+  .final-note { font-size: 13px; opacity: .4; margin-top: 16px; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #13122A; padding: 30px 6%;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px;
+  }
+  .footer-logo { font-family: 'DM Serif Display', serif; color: white; font-size: 18px; }
+  .footer-logo em { color: var(--violet-mid); font-style: italic; }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { font-size: 13px; color: rgba(255,255,255,.38); text-decoration: none; transition: color .2s; }
+  .footer-links a:hover { color: white; }
+  .footer-region { font-size: 12px; color: rgba(255,255,255,.22); }
+
+  /* ── ANIMATIONS ── */
+  .fade-up { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 860px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+    .hero-visual { display: none; }
+    .benefits-grid, .testimonials-grid { grid-template-columns: 1fr; }
+    .quiz-wrapper { grid-template-columns: 1fr; gap: 40px; }
+    .social-proof-inner { gap: 24px; }
+    .proof-divider { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Mind<em>Care</em></div>
+  <a href="#quiz" class="nav-cta">Tester mon humeur →</a>
+</nav>
+
+<!-- 1. HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge"><span class="dot"></span> Soutenu par la Région Nouvelle-Aquitaine</div>
+      <h1>Ton bien-être mental,<br><em>sans te sentir fiché.</em></h1>
+      <p class="hero-sub">MindCare t'aide à suivre ton humeur et à trouver les ressources adaptées, en <strong>toute confidentialité</strong>.</p>
+      <div class="cta-group">
+        <a href="#quiz" class="btn-primary">
+          Faire le mood check-in
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <button class="btn-ghost">Comment ça marche ?</button>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="float-badge float-badge-1">🔒 100% anonyme</div>
+      <div class="phone-frame">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="app-header">
+            <span class="app-logo-sm">MindCare</span>
+            <div class="app-avatar">😊</div>
+          </div>
+          <div class="mood-card">
+            <div class="mood-card-title">Ton score du jour</div>
+            <div class="mood-card-score">7.4</div>
+            <div class="mood-card-label">Bonne énergie ✨</div>
+          </div>
+          <div class="mood-emojis">
+            <div class="mood-emoji-btn">😞</div>
+            <div class="mood-emoji-btn">😐</div>
+            <div class="mood-emoji-btn active">🙂</div>
+            <div class="mood-emoji-btn">😊</div>
+            <div class="mood-emoji-btn">🤩</div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-icon" style="background:#EEEDFE">🧘</div>
+            <div><div class="mini-card-text">Exercice de respiration</div><div class="mini-card-sub">3 min · Recommandé</div></div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-icon" style="background:#EAF3DE">📚</div>
+            <div><div class="mini-card-text">Ressources proches</div><div class="mini-card-sub">5 aides à Bordeaux</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="float-badge float-badge-2">✅ RGPD conforme</div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. PREUVE SOCIALE -->
+<div class="social-proof">
+  <div class="social-proof-inner">
+    <div class="proof-stat">
+      <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+      <div class="proof-number">4.8/5</div>
+      <div class="proof-label">Note moyenne</div>
+    </div>
+    <div class="proof-divider"></div>
+    <div class="proof-stat">
+      <div class="proof-number">1 200+</div>
+      <div class="proof-label">Utilisateurs actifs</div>
+    </div>
+    <div class="proof-divider"></div>
+    <div class="proof-stat">
+      <div class="proof-number">78%</div>
+      <div class="proof-label">Se sentent mieux en 2 semaines</div>
+    </div>
+    <div class="proof-divider"></div>
+    <div class="proof-stat">
+      <div class="proof-number">0</div>
+      <div class="proof-label">Donnée nominative collectée</div>
+    </div>
+  </div>
+</div>
+
+<!-- 3. PROPOSITION DE VALEUR -->
+<section>
+  <div class="section-inner fade-up">
+    <div class="section-tag">Ce que tu gagnes</div>
+    <h2>Trois raisons de<br><em>commencer aujourd'hui</em></h2>
+    <p class="section-desc">Pas de jugement, pas de prise en charge médicale. MindCare t'aide à mieux te comprendre et à trouver les ressources adaptées à ta situation.</p>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon">🛡️</div>
+        <h3>Anonymat total garanti</h3>
+        <p>Aucun email, aucun téléphone. Ton pseudonyme est ta seule identité. Tes données de santé mentale ne peuvent pas être reliées à toi.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🎯</div>
+        <h3>Aide adaptée à ta situation</h3>
+        <p>Étudiant précaire à Bordeaux ou salarié isolé, MindCare t'oriente vers les ressources disponibles près de toi, selon ton profil.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">📈</div>
+        <h3>Suivi de ton humeur dans le temps</h3>
+        <p>Visualise tes tendances, repère les moments difficiles avant qu'ils s'accumulent. Ton journal est stocké uniquement sur ton appareil.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. QUIZ MOOD CHECK-IN -->
+<section class="quiz-section" id="quiz">
+  <div class="section-inner">
+    <div class="quiz-wrapper">
+      <div class="quiz-info fade-up">
+        <div class="section-tag">Mood check-in</div>
+        <h2>Comment tu te<br><em>sens en ce moment ?</em></h2>
+        <p class="section-desc" style="margin-bottom:0">5 questions, 2 minutes. Tu reçois un score et des ressources adaptées instantanément.</p>
+        <div class="quiz-steps">
+          <div class="quiz-step">
+            <div class="step-num">1</div>
+            <div class="step-text"><strong>Réponds aux 5 questions</strong><span>Honnêtement, sans pression.</span></div>
+          </div>
+          <div class="quiz-step">
+            <div class="step-num">2</div>
+            <div class="step-text"><strong>Reçois ton score</strong><span>Vert, orange ou rouge selon ton état du moment.</span></div>
+          </div>
+          <div class="quiz-step">
+            <div class="step-num">3</div>
+            <div class="step-text"><strong>Accède aux ressources</strong><span>Exercices, contenus ou aides proches de toi.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="quiz-card fade-up">
+        <div class="quiz-progress" id="progress">
+          <div class="quiz-progress-bar active"></div>
+          <div class="quiz-progress-bar"></div>
+          <div class="quiz-progress-bar"></div>
+          <div class="quiz-progress-bar"></div>
+          <div class="quiz-progress-bar"></div>
+        </div>
+        <div id="quiz-content">
+          <div class="quiz-question" id="q-text"></div>
+          <div class="quiz-options" id="q-options"></div>
+          <div class="quiz-nav">
+            <span class="quiz-counter" id="q-counter">Question 1 / 5</span>
+            <button class="btn-next" id="btn-next" onclick="nextQuestion()">Suivant →</button>
+          </div>
+        </div>
+        <div class="quiz-result" id="quiz-result">
+          <span class="result-icon" id="result-icon"></span>
+          <div class="result-badge" id="result-badge"></div>
+          <div class="result-title" id="result-title"></div>
+          <div class="result-text" id="result-text"></div>
+          <button class="btn-result" onclick="window.scrollTo({top:0,behavior:'smooth'})">Voir mes ressources sur MindCare →</button>
+          <p style="font-size:12px;color:var(--muted);margin-top:12px">Gratuit · Anonyme · Sans inscription forcée</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5A. TEMOIGNAGES -->
+<section>
+  <div class="section-inner fade-up">
+    <div class="section-tag">Témoignages</div>
+    <h2>Ils ont essayé.<br><em>Ils restent.</em></h2>
+    <div class="testimonials-grid">
+      <div class="testi-card">
+        <div class="testi-stars"><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span></div>
+        <p class="testi-text">"J'avais peur d'être fiché. Avec MindCare, aucune info personnelle à donner. J'ai enfin pu parler de mon état sans avoir peur."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:#EEEDFE;color:#534AB7">L</div>
+          <div><div class="testi-name">Léa, 22 ans</div><div class="testi-info">Étudiante, Bordeaux</div></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars"><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span></div>
+        <p class="testi-text">"Le check-in me prend 2 minutes le matin. En 3 semaines j'ai repéré que mes lundis sont systématiquement mauvais. C'est concret."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:#EAF3DE;color:#3B6D11">K</div>
+          <div><div class="testi-name">Karim, 24 ans</div><div class="testi-info">Alternant, Bordeaux</div></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars"><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star">★</span><span class="testi-star" style="opacity:.3">★</span></div>
+        <p class="testi-text">"J'étais sceptique. Les ressources proposées correspondaient vraiment à ma situation. J'ai trouvé un psy gratuit près de chez moi en 5 minutes."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" style="background:#FBEAF0;color:#993556">S</div>
+          <div><div class="testi-name">Sofia, 19 ans</div><div class="testi-info">Lycéenne, Mérignac</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5B. VIDEO / CAS CLIENT -->
+    <div class="video-block">
+      <div class="play-btn">
+        <svg width="20" height="20" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      </div>
+      <h3>"MindCare m'a donné un espace pour respirer"</h3>
+      <p>Témoignage de Maxence, 24 ans · 2 min 30</p>
+    </div>
+  </div>
+</section>
+
+<!-- 6A. FAQ -->
+<section style="background:var(--white);border-top:1px solid var(--border)">
+  <div class="section-inner fade-up">
+    <div class="section-tag">Questions fréquentes</div>
+    <h2>Les dernières<br><em>hésitations</em></h2>
+    <div class="faq-list">
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Mes données sont-elles vraiment anonymes ? <span class="faq-icon">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Oui. MindCare ne collecte ni email, ni numéro de téléphone. Seul un pseudonyme de ton choix est créé. Le contenu de ton journal est stocké uniquement sur ton appareil (local storage). L'application a passé un audit RGPD.</div></div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">MindCare remplace-t-il un suivi médical ? <span class="faq-icon">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Non. MindCare est un outil de prévention et d'orientation, pas de diagnostic. Si ton score est critique, l'application t'oriente vers des professionnels de santé ou des lignes d'aide adaptées à ta situation.</div></div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">C'est gratuit ? Pour combien de temps ? <span class="faq-icon">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">MindCare est gratuit, soutenu par la Région Nouvelle-Aquitaine dans le cadre du programme Fil Rouge. L'accès aux fonctionnalités de base restera sans frais.</div></div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Faut-il créer un compte pour faire le check-in ? <span class="faq-icon">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Tu peux faire le mood check-in sans compte pour obtenir un premier score. Pour sauvegarder ton historique et recevoir des recommandations personnalisées, tu peux créer un profil pseudonyme en 30 secondes, sans email requis.</div></div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Qui peut voir mon historique d'humeur ? <span class="faq-icon">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Personne d'autre que toi. Les scores sont liés à un pseudonyme sans nom réel. Aucun professionnel de santé, aucun établissement scolaire et aucun employeur n'y a accès.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6B. FINAL CTA + URGENCE -->
+<section class="final-cta">
+  <div class="final-cta-inner fade-up">
+    <div class="urgency-badge"><span class="urgency-dot"></span> Programme Fil Rouge · Places limitées pour le suivi personnalisé</div>
+    <h2>Prends 2 minutes<br><em>pour toi maintenant.</em></h2>
+    <p>Sans email. Sans jugement. Sans engagement.<br>Juste un espace pour voir comment tu vas vraiment.</p>
+    <div>
+      <a href="#quiz" class="btn-cta-final">
+        Commencer le mood check-in
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <p class="final-note">100% anonyme · RGPD conforme · Soutenu par la Région Nouvelle-Aquitaine</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Mind<em>Care</em></div>
+  <div class="footer-links">
+    <a href="#">Mentions légales</a>
+    <a href="#">Confidentialité</a>
+    <a href="#">Contact</a>
+  </div>
+  <div class="footer-region">Projet Fil Rouge · Région Nouvelle-Aquitaine · 2025</div>
+</footer>
+
+<script>
+const questions = [
+  {
+    text: "Comment évaluerais-tu ton énergie aujourd'hui ?",
+    options: ["Je me sens épuisé(e), sans réserves", "Fatigue normale, ça passe", "Plutôt bien, fonctionnel(le)", "Plein(e) d'énergie"],
+    scores: [1, 2, 3, 4]
+  },
+  {
+    text: "As-tu réussi à te concentrer sur tes tâches du jour ?",
+    options: ["Impossible, tout me glisse", "Difficilement, avec beaucoup d'efforts", "Oui, dans l'ensemble", "Oui, sans problème"],
+    scores: [1, 2, 3, 4]
+  },
+  {
+    text: "Comment te sens-tu par rapport aux autres en ce moment ?",
+    options: ["Très isolé(e), déconnecté(e)", "Un peu à l'écart", "Connecté(e), ça va", "Bien entouré(e)"],
+    scores: [1, 2, 3, 4]
+  },
+  {
+    text: "As-tu eu des pensées négatives récurrentes cette semaine ?",
+    options: ["Oui, tout le temps, impossible de les stopper", "Oui, souvent", "Parfois, mais je gère", "Non, très peu"],
+    scores: [1, 2, 3, 4]
+  },
+  {
+    text: "Comment s'est passé ton sommeil ces derniers jours ?",
+    options: ["Très mal, nuits agitées ou quasi-nulles", "Perturbé, pas vraiment reposant", "Correct, un peu court", "Bon, je me réveille reposé(e)"],
+    scores: [1, 2, 3, 4]
+  }
+];
+
+let current = 0, scores = [], selected = null;
+
+function renderQuestion() {
+  const q = questions[current];
+  document.getElementById('q-text').textContent = q.text;
+  document.getElementById('q-counter').textContent = `Question ${current + 1} / 5`;
+  document.querySelectorAll('.quiz-progress-bar').forEach((b, i) => b.classList.toggle('active', i <= current));
+
+  const opts = document.getElementById('q-options');
+  opts.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-option';
+    btn.innerHTML = `<span class="quiz-option-dot"></span>${opt}`;
+    btn.onclick = () => {
+      document.querySelectorAll('.quiz-option').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selected = i;
+      document.getElementById('btn-next').classList.add('ready');
+    };
+    opts.appendChild(btn);
+  });
+
+  selected = null;
+  document.getElementById('btn-next').classList.remove('ready');
+  document.getElementById('btn-next').textContent = current === questions.length - 1 ? 'Voir mon résultat →' : 'Suivant →';
+}
+
+function nextQuestion() {
+  if (selected === null) return;
+  scores.push(questions[current].scores[selected]);
+  if (current < questions.length - 1) { current++; renderQuestion(); }
+  else showResult();
+}
+
+function showResult() {
+  const total = scores.reduce((a, b) => a + b, 0);
+  const pct = total / (questions.length * 4);
+  document.getElementById('quiz-content').style.display = 'none';
+  document.getElementById('quiz-result').style.display = 'block';
+  document.querySelectorAll('.quiz-progress-bar').forEach(b => b.classList.add('active'));
+
+  if (pct >= 0.7) {
+    document.getElementById('result-icon').textContent = '🌿';
+    document.getElementById('result-badge').textContent = 'Score vert · Tu vas plutôt bien';
+    document.getElementById('result-badge').className = 'result-badge green';
+    document.getElementById('result-title').textContent = 'Continue comme ça';
+    document.getElementById('result-text').textContent = "Ton humeur est stable et ton énergie est bonne. MindCare te propose des contenus de bien-être et des exercices de prévention pour maintenir cet équilibre dans le temps.";
+  } else if (pct >= 0.4) {
+    document.getElementById('result-icon').textContent = '🍂';
+    document.getElementById('result-badge').textContent = 'Score orange · Quelques signaux à surveiller';
+    document.getElementById('result-badge').className = 'result-badge orange';
+    document.getElementById('result-title').textContent = 'Prends soin de toi';
+    document.getElementById('result-text').textContent = "Tu montres quelques signes de fatigue ou de stress. MindCare te propose des exercices de respiration, des articles sur la gestion du stress et un suivi pour voir si ça s'améliore.";
+  } else {
+    document.getElementById('result-icon').textContent = '🌧️';
+    document.getElementById('result-badge').textContent = 'Score rouge · Tu as besoin de soutien';
+    document.getElementById('result-badge').className = 'result-badge red';
+    document.getElementById('result-title').textContent = 'Tu n\'es pas seul(e)';
+    document.getElementById('result-text').textContent = "Ce que tu traverses est réel. MindCare t'oriente vers des ressources d'aide adaptées à ta localisation et ta situation, accessibles gratuitement.";
+  }
+}
+
+function toggleFaq(el) {
+  const wasOpen = el.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) el.classList.add('open');
+}
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+renderQuestion();
+</script>
+</body>
+</html>
